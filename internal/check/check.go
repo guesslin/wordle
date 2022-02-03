@@ -74,6 +74,10 @@ func (w *Wordle) Check(input string) []Status {
 	return res
 }
 
+func (w *Wordle) String() string {
+	return string(w.question)
+}
+
 func (w *Wordle) has(c byte) bool {
 	return w.lookup[c]
 }

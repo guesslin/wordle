@@ -3,9 +3,15 @@ package play
 import (
 	"fmt"
 	"os"
+	"strings"
 
+	"github.com/guesslin/mywordle/internal/check"
 	"github.com/guesslin/mywordle/internal/dictionary"
 	"github.com/guesslin/mywordle/internal/pick"
+)
+
+const (
+	head = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
 )
 
 type Round struct {
@@ -13,20 +19,20 @@ type Round struct {
 	maxRounds int
 
 	// Pre-Generated question
-	question string
+	question *check.Wordle
 
 	// Records while playing
-	history []string
+	history  []string
+	alphabet []check.Status
 }
 
 func NewRound(max int) *Round {
 	result := &Round{
 		maxRounds: max,
-		question:  pick.Pick(dictionary.Pool),
+		question:  check.NewWordle(pick.Pick(dictionary.Pool)),
 		history:   make([]string, 0),
+		alphabet:  make([]check.Status, 26),
 	}
-
-	fmt.Println(result.question)
 
 	return result
 }
@@ -36,21 +42,54 @@ func (r *Round) Play() {
 		// ask for input
 		answer := ensureAsk(len(r.history) + 1)
 
-		if answer == r.question {
-			fmt.Println("Found")
+		if r.check(answer) {
 			return
 		}
+
 		r.history = append(r.history, answer)
 	}
 	fmt.Printf("The Question is %s\n", r.question)
+	fmt.Printf("Your guess history: %+v\n", r.history)
+	r.printStat()
+}
+
+func (r *Round) check(answer string) bool {
+	status := r.question.Check(answer)
+	if check.Passed(status) {
+		fmt.Println("Found")
+		return true
+	}
+
+	// Update owned alphabet with status
+	for i, c := range []byte(answer) {
+		r.alphabet[num(c)] = status[i]
+	}
+	r.printStat()
+
+	return false
+}
+
+func (r *Round) printStat() {
+	// Print out alphabet status
+	fmt.Println(head)
+	fmt.Println(buildStat(r.alphabet))
+}
+
+func buildStat(input []check.Status) string {
+	status := make([]string, 0, len(input))
+	for _, s := range input {
+		status = append(status, s.String())
+	}
+	return strings.Join(status, " ")
 }
 
 func ensureAsk(i int) string {
 	// check if answer is valid
 	for {
-		var answer string
+		var input string
 		fmt.Printf("Your %s Guess: ", cardinal(i))
-		fmt.Fscanln(os.Stdin, &answer)
+		fmt.Fscanln(os.Stdin, &input)
+		answer := strings.ToLower(input)
 		if valid(answer) {
 			return answer
 		}
@@ -77,5 +116,8 @@ func cardinal(i int) string {
 		return "3rd"
 	}
 	return fmt.Sprintf("%dth", i)
+}
 
+func num(b byte) int {
+	return int(b - 'a')
 }
