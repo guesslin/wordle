@@ -15,16 +15,14 @@ package {{.Package}}
 
 func init() {
 	Pool = []string{
-		{{range .Items}}"{.Key}",
+		{{range .Items}}"{{.Key}}",
 		{{end}}
 	}
         words = map[string]bool{
                 {{range .Items}}"{{.Key}}": {{.Value}},
                 {{end}}
         }
-}
-
-`
+}`
 )
 
 type Config struct {
