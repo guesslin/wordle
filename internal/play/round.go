@@ -5,9 +5,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/guesslin/mywordle/internal/check"
-	"github.com/guesslin/mywordle/internal/dictionary"
-	"github.com/guesslin/mywordle/internal/pick"
+	"github.com/guesslin/wordle/internal/check"
+	"github.com/guesslin/wordle/internal/dictionary"
+	"github.com/guesslin/wordle/internal/pick"
 )
 
 const (

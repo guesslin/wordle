@@ -3,7 +3,7 @@ package check_test
 import (
 	"testing"
 
-	"github.com/guesslin/mywordle/internal/check"
+	"github.com/guesslin/wordle/internal/check"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

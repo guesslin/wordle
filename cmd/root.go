@@ -24,7 +24,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/guesslin/mywordle/internal/play"
+	"github.com/guesslin/wordle/internal/play"
 	"github.com/spf13/cobra"
 )
 

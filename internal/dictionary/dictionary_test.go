@@ -3,7 +3,7 @@ package dictionary_test
 import (
 	"testing"
 
-	"github.com/guesslin/mywordle/internal/dictionary"
+	"github.com/guesslin/wordle/internal/dictionary"
 
 	"github.com/stretchr/testify/assert"
 )

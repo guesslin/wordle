@@ -1,4 +1,4 @@
-module github.com/guesslin/mywordle
+module github.com/guesslin/wordle
 
 go 1.17
 
