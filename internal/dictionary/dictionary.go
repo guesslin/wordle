@@ -4,6 +4,7 @@ package dictionary
 //go:generate go run generator/generator.go -o ./dictionary.pb.go
 
 var (
+	Pool  []string
 	words map[string]bool
 )
 
