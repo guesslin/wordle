@@ -46,6 +46,6 @@ func Execute() {
 }
 
 func rootRunner(cmd *cobra.Command, args []string) {
-	round := play.NewRound(5)
+	round := play.NewRound(6)
 	round.Play()
 }
