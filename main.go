@@ -21,7 +21,7 @@ THE SOFTWARE.
 */
 package main
 
-import "github.com/guesslin/mywordle/cmd"
+import "github.com/guesslin/wordle/cmd"
 
 func main() {
 	cmd.Execute()
