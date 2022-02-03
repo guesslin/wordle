@@ -5,10 +5,33 @@ import "strings"
 type Status int
 
 const (
-	NotAppear Status = iota // X: Not appear in the target string
+	Unknown   Status = iota // .: We don't know it yet
+	NotAppear               // X: Not appear in the target string
 	Appear                  // B: Appear in the target string, but wrong position
 	Same                    // A: Appear in the target string, and correct position
 )
+
+func (s Status) String() string {
+	switch s {
+	case NotAppear:
+		return "X"
+	case Appear:
+		return "B"
+	case Same:
+		return "A"
+	default:
+		return "."
+	}
+}
+
+func Passed(status []Status) bool {
+	for _, s := range status {
+		if s != Same {
+			return false
+		}
+	}
+	return true
+}
 
 type Wordle struct {
 	question []byte
@@ -38,6 +61,7 @@ func (w *Wordle) Check(input string) []Status {
 	res := make([]Status, len(w.question))
 
 	for i, c := range answer {
+		res[i]++
 		if !w.has(c) {
 			continue
 		}
